@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rivo RAKOTONDRASOA - Expert Cloud DevOps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #00ff66;
+            --secondary-green: #00cc52;
+            --dark-green: #00994d;
+            --matrix-green: #00ff41;
+            --bg-black: #000000;
+            --bg-dark: #0a0a0a;
+            --bg-darker: #050505;
+            --text-green: #00ff66;
+            --text-light: #00ff6680;
+            --border-green: #00ff6633;
+            --shadow-green: 0 0 20px rgba(0, 255, 102, 0.5);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Courier New', 'Ubuntu Mono', monospace;
+            background: var(--bg-black);
+            color: var(--text-green);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Terminal cursor effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 102, 0.03) 2px,
+                rgba(0, 255, 102, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Matrix rain effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 102, 0.05) 25%, rgba(0, 255, 102, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 102, 0.05) 75%, rgba(0, 255, 102, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            animation: matrix-rain 10s linear infinite;
+        }
+
+        @keyframes matrix-rain {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-green);
+            box-shadow: var(--shadow-green);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            text-decoration: none;
+            text-shadow: 0 0 10px var(--primary-green);
+            transition: var(--transition);
+        }
+
+        .logo::before {
+            content: '> ';
+            color: var(--dark-green);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px var(--primary-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-green);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '[ ';
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: ' ]';
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a:hover::after {
+            opacity: 1;
+        }
+
+        .nav-links a:hover {
+            text-shadow: 0 0 10px var(--primary-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(0, 255, 102, 0.1) 0%, transparent 70%);
+        }
+
+        .terminal-window {
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--border-green);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: var(--shadow-green);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: rgba(0, 255, 102, 0.1);
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-green);
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            box-shadow: 0 0 5px var(--primary-green);
+        }
+
+        .terminal-content {
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .typing-text {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end);
+            border-right: 3px solid var(--primary-green);
+            animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-green) }
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+            text-shadow: 0 0 10px var(--primary-green);
+        }
+
+        .hero .subtitle {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero .status {
+            color: var(--secondary-green);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--primary-green);
+            background: transparent;
+            color: var(--primary-green);
+            text-decoration: none;
+            transition: var(--transition);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-green);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            color: var(--bg-black);
+            box-shadow: var(--shadow-green);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::before {
+            content: '// ';
+            color: var(--dark-green);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary-green), transparent);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .profile-card {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid var(--border-green);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+            border: 2px solid var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: rgba(0, 255, 102, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 102, 0.3);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px var(--primary-green);
+        }
+
+        .profile-title {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .contact-info a {
+            color: var(--primary-green);
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .contact-info a:hover {
+            text-shadow: 0 0 10px var(--primary-green);
+            transform: translateX(5px);
+        }
+
+        .about-text {
+            color: var(--text-green);
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* Skills Grid */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid var(--border-green);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .skill-category:hover {
+            background: rgba(0, 255, 102, 0.1);
+            box-shadow: var(--shadow-green);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category h3::before {
+            content: '▶';
+            font-size: 0.8rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .skill-list li::before {
+            content: '+ ';
+            color: var(--dark-green);
+        }
+
+        .skill-list li:hover {
+            color: var(--primary-green);
+            transform: translateX(5px);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary-green), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            box-shadow: 0 0 10px var(--primary-green);
+        }
+
+        .timeline-date {
+            color: var(--dark-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-company {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--text-green);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .timeline-description li {
+            margin: 0.5rem 0;
+            list-style: none;
+        }
+
+        .timeline-description li::before {
+            content: '→ ';
+            color: var(--dark-green);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid var(--border-green);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 102, 0.1));
+            transition: var(--transition);
+        }
+
+        .project-card:hover::before {
+            top: 0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-green);
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 255, 102, 0.2);
+            color: var(--primary-green);
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-green);
+        }
+
+        /* Contact Form */
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid var(--border-green);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-green);
+            color: var(--text-green);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px solid var(--border-green);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-green);
+            transition: var(--transition);
+        }
+
+        .contact-link:hover {
+            background: rgba(0, 255, 102, 0.1);
+            transform: translateX(10px);
+            box-shadow: var(--shadow-green);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-green);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text-light);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            text-shadow: 0 0 20px var(--primary-green);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .terminal-content {
+                padding: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Glow animation */
+        @keyframes glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="logo">RIVO_RAKOTONDRASOA</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+            </div>
+            <div class="terminal-content">
+                <div class="typing-text">
+                    <h1>$ whoami</h1>
+                </div>
+                <p class="subtitle">> Rivo RAKOTONDRASOA</p>
+                <p class="subtitle">> Expert Cloud DevOps | Consultant Cybersécurité</p>
+                <p class="status glow">> Status: #OpenToWork</p>
+                <p class="subtitle">> En recherche d'un poste DevOps Junior</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn">Contact</a>
+                    <a href="https://github.com/rivo-rakotondrasoa" target="_blank" class="btn">GitHub</a>
+                    <a href="https://linkedin.com/in/rivo-rakotondrasoa" target="_blank" class="btn">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="profile-card">
+                <div class="profile-image">👨‍💻</div>
+                <h3 class="profile-name">Rivo RAKOTONDRASOA</h3>
+                <p class="profile-title">Cloud DevOps Engineer</p>
+                <div class="contact-info">
+                    <a href="mailto:mamonjyrivo@gmail.com">📧 mamonjyrivo@gmail.com</a>
+                    <a href="tel:+33675419587">📱 06 75 41 95 87</a>
+                    <a href="https://github.com/rivo-rakotondrasoa">🔗 GitHub</a>
+                    <a href="https://linkedin.com/in/rivo-rakotondrasoa">🔗 LinkedIn</a>
+                </div>
+            </div>
+            <div class="about-text">
+                <p>
+                    Consultant Cloud DevOps junior avec un parcours solide en cybersécurité et systèmes.
+                    Expert en automatisation, infrastructure as code et sécurisation d'architectures cloud.
+                </p>
+                <p>
+                    Je maîtrise les technologies cloud modernes (AWS, Azure), les outils DevOps 
+                    (Terraform, Docker, Kubernetes, GitLab CI, Jenkins, Ansible) et j'ai une forte 
+                    expertise en scripting (Python, Bash).
+                </p>
+                <p>
+                    Compétent en tests de pénétration, hardening système et forensic, je combine 
+                    les meilleures pratiques DevOps avec une approche security-first pour créer 
+                    des infrastructures robustes et sécurisées.
+                </p>
+                <p>
+                    Mon objectif : intégrer des projets innovants où je pourrai mettre à profit 
+                    mes compétences en automatisation, orchestration de microservices et sécurité cloud.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <h2 class="section-title">Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>☁️ Cloud & Infrastructure</h3>
+                <ul class="skill-list">
+                    <li>AWS (EC2, S3, IAM, VPC, RDS)</li>
+                    <li>Microsoft Azure</li>
+                    <li>Terraform (IaC)</li>
+                    <li>Architecture Cloud Design</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>🔄 CI/CD & Automation</h3>
+                <ul class="skill-list">
+                    <li>GitLab CI</li>
+                    <li>Jenkins</li>
+                    <li>Ansible</li>
+                    <li>GitHub Actions</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>🐳 Containerization</h3>
+                <ul class="skill-list">
+                    <li>Docker</li>
+                    <li>Kubernetes</li>
+                    <li>LXC</li>
+                    <li>Microservices Orchestration</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>💻 Scripting & Dev</h3>
+                <ul class="skill-list">
+                    <li>Python</li>
+                    <li>Bash</li>
+                    <li>PowerShell</li>
+                    <li>C</li>
+                    <li>PHP</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>🛡️ Security & Pentesting</h3>
+                <ul class="skill-list">
+                    <li>Burp Suite</li>
+                    <li>Metasploit</li>
+                    <li>Nmap</li>
+                    <li>System Hardening</li>
+                    <li>Forensic (Volatility)</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>📊 Monitoring & DB</h3>
+                <ul class="skill-list">
+                    <li>Grafana</li>
+                    <li>Centreon</li>
+                    <li>MySQL</li>
+                    <li>Galera Cluster</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>🌐 Web & Network</h3>
+                <ul class="skill-list">
+                    <li>Nginx</li>
+                    <li>Apache</li>
+                    <li>HAProxy</li>
+                    <li>Active Directory</li>
+                    <li>Cisco</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>🖥️ Operating Systems</h3>
+                <ul class="skill-list">
+                    <li>Linux (Ubuntu, CentOS, Kali)</li>
+                    <li>Windows Server</li>
+                    <li>System Administration</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Septembre 2022 - Octobre 2024 (2 ans+)</div>
+                <div class="timeline-title">Apprenti Analyste Cybersécurité</div>
+                <div class="timeline-company">NGINE NETWORKS, Paris 13</div>
+                <ul class="timeline-description">
+                    <li>Réalisation de tests de pénétration (web, systèmes)</li>
+                    <li>Gestion de surveillance cloud Azure</li>
+                    <li>Gestion des incidents et assistance technique</li>
+                    <li>Sécurisation d'architectures et hardening système</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Septembre 2021 - Septembre 2022 (1 an)</div>
+                <div class="timeline-title">Technicien Support Informatique</div>
+                <div class="timeline-company">NGINE NETWORKS, Paris 13</div>
+                <ul class="timeline-description">
+                    <li>Support technique client (logiciel + matériel)</li>
+                    <li>Maintenance réseau et gestion des incidents</li>
+                    <li>Administration système et résolution de problèmes</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Avril 2020 - Juin 2020 (2 mois)</div>
+                <div class="timeline-title">Stage - Concepteur de Base de Données</div>
+                <div class="timeline-company">OPINAKA, Télétravail</div>
+                <ul class="timeline-description">
+                    <li>Création d'un modèle relationnel</li>
+                    <li>Alimentation MySQL et requête de données</li>
+                    <li>Optimisation des performances de base de données</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects
