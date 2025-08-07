@@ -203,6 +203,7 @@
             animation: typing 3s steps(40, end);
             border-right: 3px solid var(--primary-green);
             animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+            max-height: 2rem;
         }
 
         @keyframes typing {
@@ -228,10 +229,11 @@
         }
 
         .hero h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--primary-green);
             text-shadow: 0 0 10px var(--primary-green);
+            display: inline-block;
         }
 
         .hero .subtitle {
@@ -825,7 +827,6 @@
                 <p class="profile-title">Cloud DevOps Engineer</p>
                 <div class="contact-info">
                     <a href="mailto:mamonjyrivo@gmail.com">📧 mamonjyrivo@gmail.com</a>
-                    <a href="tel:+33675419587">📱 06 75 41 95 87</a>
                     <a href="https://github.com/rivo-rakotondrasoa">🔗 GitHub</a>
                     <a href="https://linkedin.com/in/rivo-rakotondrasoa">🔗 LinkedIn</a>
                 </div>
@@ -864,107 +865,147 @@
             <div class="skill-category">
                 <h3>☁️ Cloud & Infrastructure</h3>
                 <ul class="skill-list">
-                    <li>AWS</li>
-                    <li>Azure</li>
-                    <li>Terraform</li>
+                    <li><img src="https://raw.githubusercontent.com/devicons/devicon/54cfe13ac10eaa1ef817a343ab0a9437eb3c2e08/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">AWS</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Azure</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Terraform</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🔄 CI/CD & Automation</h3>
                 <ul class="skill-list">
-                    <li>GitLab CI</li>
-                    <li>Jenkins</li>
-                    <li>Ansible</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">GitLab CI</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Jenkins</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Ansible</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🐳 Containerization & Orchestration</h3>
                 <ul class="skill-list">
-                    <li>Docker</li>
-                    <li>Kubernetes</li>
-                    <li>LXC</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Docker</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Kubernetes</li>
+                    <li><img src="https://cdn.simpleicons.org/linux/FCC624" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">LXC</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>💻 Scripting & Programming</h3>
                 <ul class="skill-list">
-                    <li>Python</li>
-                    <li>Bash</li>
-                    <li>C</li>
-                    <li>PowerShell</li>
-                    <li>PHP</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Python</li>
+                    <li><img src="https://cdn.simpleicons.org/gnubash/4EAA25" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Bash</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="20"
+                            height="20" style="vertical-align: middle; margin-right: 8px;">C</li>
+                    <li><img src="https://raw.githubusercontent.com/devicons/devicon/54cfe13ac10eaa1ef817a343ab0a9437eb3c2e08/icons/powershell/powershell-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">PowerShell</li>
+                    <li><img src="https://images.icon-icons.com/2699/PNG/512/haproxy_logo_icon_171017.png" width="20"
+                            height="20" style="vertical-align: middle; margin-right: 8px;">PHP</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🗄️ Database & Cluster</h3>
                 <ul class="skill-list">
-                    <li>MySQL</li>
-                    <li>Galera</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">MySQL</li>
+                    <li><img src="https://cdn.simpleicons.org/mariadb/003545" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Galera</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>📊 Monitoring</h3>
                 <ul class="skill-list">
-                    <li>Grafana</li>
-                    <li>Centreon</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Grafana</li>
+                    <li><img src="https://images.icon-icons.com/2699/PNG/512/centreon_logo_icon_170408.png" width="20"
+                            height="20" style="vertical-align: middle; margin-right: 8px;">Centreon</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🌐 Web Services & Proxy</h3>
                 <ul class="skill-list">
-                    <li>Nginx</li>
-                    <li>Apache</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Nginx</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Apache</li>
                     <li>HAProxy</li>
                 </ul>
             </div>
             <div class="skill-category">
-                <h3>🖥️ Systèmes d'Exploitation</h3>
+                <h3>🖥️ OS</h3>
                 <ul class="skill-list">
-                    <li>Ubuntu</li>
-                    <li>Windows Server</li>
-                    <li>Kali Linux</li>
-                    <li>CentOS</li>
+                    <li><img src="https://raw.githubusercontent.com/devicons/devicon/54cfe13ac10eaa1ef817a343ab0a9437eb3c2e08/icons/ubuntu/ubuntu-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Ubuntu</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Windows Server
+                    </li>
+                    <li><img src="https://www.kali.org/images/kali-tools-icon-missing.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Kali Linux</li>
+                    <li><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/centos/centos-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">CentOS</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🏢 Directory & Network Services</h3>
                 <ul class="skill-list">
-                    <li>Active Directory</li>
-                    <li>Cisco</li>
+                    <li><img src="https://raw.githubusercontent.com/devicons/devicon/54cfe13ac10eaa1ef817a343ab0a9437eb3c2e08/icons/windows11/windows11-original.svg"
+                            width="20" height="20" style="vertical-align: middle; margin-right: 8px;">Active Directory
+                    </li>
+                    <li><img src="https://cdn.simpleicons.org/cisco/1BA0D7" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Cisco</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🔍 Recognition & OSINT</h3>
                 <ul class="skill-list">
-                    <li>Nmap</li>
-                    <li>Wireshark</li>
-                    <li>Gobuster</li>
+                    <li><img src="https://img.icons8.com/?size=100&id=9b5wowKIlo9d&format=png&color=000000" width="20"
+                            height="20" style="vertical-align: middle; margin-right: 8px;">Nmap</li>
+                    <li><img src="https://cdn.simpleicons.org/wireshark/1679A7" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Wireshark</li>
+                    <li><img src="https://www.kali.org/tools/gobuster/images/gobuster-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Gobuster</li>
                     <li>Shodan</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🛡️ Exploitation & Pentesting</h3>
                 <ul class="skill-list">
-                    <li>Burp Suite</li>
-                    <li>Metasploit</li>
-                    <li>SQLMap</li>
-                    <li>Nikto</li>
-                    <li>Hydra</li>
+                    <li><img src="https://cdn.simpleicons.org/burpsuite/FF6633" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Burp Suite</li>
+                    <li><img src="https://cdn.simpleicons.org/metasploit/2596CD" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Metasploit</li>
+                    <li><img src="https://www.kali.org/tools/sqlmap/images/sqlmap-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">SQLMap</li>
+                    <li><img src="https://www.kali.org/tools/nikto/images/nikto-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Nikto</li>
+                    <li><img src="https://www.kali.org/tools/hydra/images/hydra-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Hydra</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🔓 Cracking & Password Attacks</h3>
                 <ul class="skill-list">
-                    <li>John The Ripper</li>
-                    <li>Hashcat</li>
+                    <li><img src="https://www.kali.org/tools/john/images/john-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">John The Ripper</li>
+                    <li><img src="https://www.kali.org/tools/hashcat/images/hashcat-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Hashcat</li>
                 </ul>
             </div>
             <div class="skill-category">
                 <h3>🔬 Reverse Engineering & Forensic</h3>
                 <ul class="skill-list">
-                    <li>Ghidra</li>
+                    <li><img src="https://www.kali.org/tools/ghidra/images/ghidra-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Ghidra</li>
                     <li>Volatility</li>
-                    <li>Binwalk</li>
+                    <li><img src="https://www.kali.org/tools/binwalk/images/binwalk-logo.svg" width="20" height="20"
+                            style="vertical-align: middle; margin-right: 8px;">Binwalk</li>
                 </ul>
             </div>
         </div>
@@ -977,7 +1018,10 @@
             <div class="timeline-item">
                 <div class="timeline-date">Septembre 2022 - Octobre 2024 (2 ans+)</div>
                 <div class="timeline-title">Apprenti Analyste Cybersécurité</div>
-                <div class="timeline-company">NGINE NETWORKS, Paris 13</div>
+                <div class="timeline-company" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="assets/images/logos/ngine.png" width="140" height="34" style="border-radius: 3px;">
+                    NGINE NETWORKS, Paris 13
+                </div>
                 <ul class="timeline-description">
                     <li>Réalisation de tests de pénétration (web, systèmes)</li>
                     <li>Gestion de surveillance cloud Azure</li>
@@ -988,7 +1032,10 @@
             <div class="timeline-item">
                 <div class="timeline-date">Septembre 2021 - Septembre 2022 (1 an)</div>
                 <div class="timeline-title">Technicien Support Informatique</div>
-                <div class="timeline-company">NGINE NETWORKS, Paris 13</div>
+                <div class="timeline-company" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="assets/images/logos/ngine.png" width="140" height="34" style="border-radius: 3px;">
+                    NGINE NETWORKS, Paris 13
+                </div>
                 <ul class="timeline-description">
                     <li>Support technique client (logiciel + matériel)</li>
                     <li>Maintenance réseau et gestion des incidents</li>
@@ -998,7 +1045,10 @@
             <div class="timeline-item">
                 <div class="timeline-date">Avril 2020 - Juin 2020 (2 mois)</div>
                 <div class="timeline-title">Stage - Concepteur de Base de Données</div>
-                <div class="timeline-company">OPINAKA, Télétravail</div>
+                <div class="timeline-company" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <img src="assets/images/logos/opinaka.png" width="50" height="50" style="border-radius: 3px;">
+                    OPINAKA, Télétravail
+                </div>
                 <ul class="timeline-description">
                     <li>Création d'un modèle relationnel</li>
                     <li>Alimentation MySQL et requête de données</li>
@@ -1008,4 +1058,4 @@
         </div>
     </section>
 
-    <!-- Projects
+    <!-- Projects Section -->
